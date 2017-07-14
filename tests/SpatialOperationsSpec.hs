@@ -76,7 +76,7 @@ spatialOpsSpecs = describe "Tests Contains" $ do
         polygon = makePolygonGeo [[(0,0),(0,1),(1,1),(1,0),(0,0)]]
         foo = V.fromList $ zip points [(0::Int)..]
         result = runGeos $ do
-          tree <- createSTR foo
+          let tree = createSTR foo
           pure $ querySTR tree polygon
     result `shouldBe` V.fromList [0,1]
 
@@ -84,7 +84,7 @@ spatialOpsSpecs = describe "Tests Contains" $ do
     points <- (fmap ensurePoint) <$> loadThingsFromFile "tests/sampledata/points.csv"
     polygons <- (fmap ensurePolygon) <$> loadThingsFromFile "tests/sampledata/polygons.csv"
     let result = runGeos $ do
-          tree <- createSTR $ zip (take 10 points) [(0::Int)..]
+          let tree = createSTR $ zip (take 10 points) [(0::Int)..]
           let polygon = head polygons
           let result = querySTR tree polygon
           let results = querySTR tree <$> polygons

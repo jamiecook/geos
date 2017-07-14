@@ -19,10 +19,8 @@ createSTR things = do
           rg :: RG.Geom <- convertGeometryToRaw g
           RT.insert tree' rg b
 
-querySTR :: Storable b => RT.STRTree b -> Geometry a -> V.Vector b
+querySTR :: Storable b => Geos (RT.STRTree b) -> Geometry a -> V.Vector b
 querySTR tree g = runGeos $ do
   rg :: RG.Geom <- convertGeometryToRaw g
-  RT.query tree rg
-
--- query :: (Storable b, RG.Geometry a) => (STRTree b) -> a -> Geos (V.Vector b)
---  RP.prepare r
+  tree' <- tree
+  RT.query tree' rg
