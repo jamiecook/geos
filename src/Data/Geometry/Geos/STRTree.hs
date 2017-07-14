@@ -11,8 +11,8 @@ import Data.Geometry.Geos.Raw.Base
 import Foreign
 import qualified Data.Vector as V
 
-createSTR :: (Foldable f, Storable b) => f (Geometry a, b) -> RT.STRTree b
-createSTR things = runGeos $ do
+createSTR :: (Foldable f, Storable b) => f (Geometry a, b) -> Geos (RT.STRTree b)
+createSTR things = do
   tree <- RT.createSTRTree 10
   foldM ins tree things
   where ins tree' (g,b) = do
